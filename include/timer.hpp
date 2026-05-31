@@ -14,17 +14,14 @@ public:
 
     void start()
     {
-        startTime =
-            std::chrono::highResolutionClock::now();
+        startTime = std::chrono::highResolutionClock::now();
     }
 
     double stop()
     {
-        auto end =
-            std::chrono::highResolutionClock::now();
+        auto end = std::chrono::highResolutionClock::now();
 
-        return std::chrono::duration<double>(
-                end - startTime).count();
+        return std::chrono::duration<double>( end - startTime).count();
     }
 };
 

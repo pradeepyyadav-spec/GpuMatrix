@@ -1,39 +1,50 @@
-Matrix matrixMultiplyCpu( const Matrix& matrixA, const Matrix& matrixB, int matrixSize )
+#include "../../include/denseCpu.hpp"
+#include "../../include/matrixGenerator.hpp"
+#include <stdexcept>
+
+DenseMatrix DenseCpu::matrixMultiply( const DenseMatrix& matrixA, const DenseMatrix& matrixB )
 {
-    Matrix result( matrixSize * matrixSize, 0.0f );
+    const int matrixSize = matrixA.getRowCount();
 
-    for( int row = 0; row < matrixSize; row++ )
+    DenseMatrix result( matrixSize, matrixSize );
+
+    for ( int row = 0; row < matrixSize; row++ )
     {
-        for(int col = 0; col < matrixSize; col++ )
+        for ( int column = 0; column < matrixSize; column++ )
         {
-            float sum = 0.0;
+            float sum = 0.0f;
 
-            for( int k = 0; k < matrixSize; k++ )
+            for ( int k = 0; k < matrixSize; k++ )
             {
-                sum += matrixA[row * matrixSize + k] * matrixB[k * matrixSize + col];
+                sum += matrixA.getValue(row, k) * matrixB.getValue(k, column);
             }
 
-            result[row * matrixSize + col] = sum;
+            result.setValue( row, column, sum );
         }
     }
 
     return result;
 }
 
-Matrix matrixPowerCpu( const Matrix& inputMatrix, int exponentValue, int matrixSize )
+DenseMatrix DenseCpu::matrixPower( const DenseMatrix& inputMatrix, int exponentValue )
 {
-    Matrix result = createIdentityMatrix( matrixSize );
-
-    Matrix baseMatrix = inputMatrix;
-
-    while(exponentValue > 0)
+    if (!inputMatrix.isSquare())
     {
-        if(exponentValue & 1)
+        throw std::runtime_error( "Matrix exponentiation requires a square matrix." );
+    }
+
+    DenseMatrix result = MatrixGenerator::createIdentityMatrix( inputMatrix.getRowCount() );
+
+    DenseMatrix baseMatrix = inputMatrix;
+
+    while (exponentValue > 0)
+    {
+        if (exponentValue & 1)
         {
-            result = matrixMultiplyCpu( result, baseMatrix, matrixSize );
+            result = matrixMultiply( result, baseMatrix );
         }
 
-        baseMatrix = matrixMultiplyCpu( baseMatrix, baseMatrix, matrixSize );
+        baseMatrix = matrixMultiply( baseMatrix, baseMatrix );
 
         exponentValue >>= 1;
     }

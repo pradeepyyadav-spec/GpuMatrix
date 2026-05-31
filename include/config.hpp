@@ -1,13 +1,16 @@
 #ifndef CONFIG_HPP
 #define CONFIG_HPP
 
-#define TILE_SIZE 16
+#pragma once
 
-#define SMALL_MATRIX 512
-#define MEDIUM_MATRIX 1024
-#define LARGE_MATRIX 2048
-#define XLARGE_MATRIX 4096
-
-#define EXPONENT 100
+namespace config
+{
+    constexpr int tileSize = 16;
+    constexpr int smallMatrixSize = 512;
+    constexpr int mediumMatrixSize = 1024;
+    constexpr int largeMatrixSize = 2048;
+    constexpr int extraLargeMatrixSize = 4096;
+    constexpr int exponentValue = 100;
+}
 
 #endif

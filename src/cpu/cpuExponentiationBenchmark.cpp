@@ -1,9 +1,8 @@
 #include "../../include/timer.hpp"
-#include "../../include/matrixUtils.hpp"
+#include "../../include/denseCpu.hpp"
+#include "../../include/matrixGenerator.hpp"
 
 #include <iostream>
-
-Matrix matrixPowerCpu( const Matrix&, int, int );
 
 int main()
 {
@@ -12,13 +11,13 @@ int main()
 
     std::cout << "Generating Matrix..." << std::endl;
 
-    Matrix matrix = createEdaDenseMatrix( matrixSize );
+    DenseMatrix matrix = MatrixGenerator::createEdaDenseMatrix( matrixSize );
 
     Timer timer;
 
     timer.start();
 
-    Matrix result = matrixPowerCpu( matrix, exponentValue, matrixSize );
+    DenseMatrix result = DenseCpu::matrixPower( matrix, exponentValue );
 
     double executionTime = timer.stop();
 
