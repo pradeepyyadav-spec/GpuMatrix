@@ -1,28 +1,28 @@
-#ifndef TIMER_HPP
-#define TIMER_HPP
+#pragma once
 
 #include <chrono>
-#include <iostream>
 
-class Timer {
-
-private:
-
-    std::chrono::highResolutionClock::timePoint startTime;
-
+class Timer
+{
 public:
 
     void start()
     {
-        startTime = std::chrono::highResolutionClock::now();
+        startTime_ =
+            std::chrono::high_resolution_clock::now();
     }
 
     double stop()
     {
-        auto end = std::chrono::highResolutionClock::now();
+        auto endTime =
+            std::chrono::high_resolution_clock::now();
 
-        return std::chrono::duration<double>( end - startTime).count();
+        return std::chrono::duration<double>(
+            endTime - startTime_
+        ).count();
     }
-};
 
-#endif
+private:
+
+    std::chrono::high_resolution_clock::time_point startTime_;
+};
