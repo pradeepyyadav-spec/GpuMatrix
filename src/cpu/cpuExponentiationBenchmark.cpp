@@ -9,22 +9,27 @@
 
 int main()
 {
-    constexpr int matrixSizes[] = { 512, 1024, 2048,4096 };
+    constexpr int matrixSizes[] = { 512, 1024 };
 
     constexpr int exponentValue = 100;
 
     std::vector<BenchmarkResult> benchmarkResults;
 
-    std::cout << std::endl << std::endl << "CPU Matrix Exponentiation Benchmark\n" << "Exponent = " << exponentValue << std::endl;
-    std::cout << "---------------------------------------------\n";
+    std::cout << "=============================================\n"
+        << "CPU Matrix Exponentiation Benchmark\n" << "Exponent = " << exponentValue << "\n"
+        << "=============================================\n";
 
     for (int matrixSize : matrixSizes)
     {
-        std::cout << "Matrix Size : " << matrixSize << " x " << matrixSize << std::endl;
+        std::cout << "\n---------------------------------------------\n"
+            << "Matrix Size : " << matrixSize << " x " << matrixSize
+            << "\n---------------------------------------------\n";
 
-        DenseMatrix matrix = MatrixGenerator::createEdaDenseMatrix( matrixSize );
+        DenseMatrix matrix =
+            MatrixGenerator::createEdaDenseMatrix( matrixSize );
 
-        double matrixMemoryMb = static_cast<double>( matrix.getSizeInBytes() ) / (1024.0 * 1024.0);
+        double matrixMemoryMb =
+            static_cast<double>( matrix.getSizeInBytes() ) / (1024.0 * 1024.0);
 
         std::cout << "Approx Matrix Memory : " << std::fixed << std::setprecision(2) << matrixMemoryMb << " MB" << std::endl;
 
@@ -38,25 +43,35 @@ int main()
 
         BenchmarkResult benchmarkResult;
 
+        benchmarkResult.matrixSize = matrixSize;
+
         benchmarkResult.executionTimeSeconds = executionTime;
+
+        double floatingPointOperations = 2.0 * matrixSize * matrixSize * matrixSize;
+
+        benchmarkResult.gflops = floatingPointOperations / (executionTime * 1e9);
 
         benchmarkResults.push_back( benchmarkResult );
 
-        std::cout << "Execution Time : " << executionTime << " sec\n\n" << std::endl;
+        std::cout << "Execution Time : " << executionTime << " sec" << std::endl;
+
+        std::cout << "GFLOPS : " << benchmarkResult.gflops << std::endl;
     }
 
-    std::cout << "Benchmark Summary" << std::endl;
+    std::cout << "\n\n=========================================================\n"
+        << "Benchmark Summary\n"
+        << "=========================================================\n";
 
-    std::cout << std::left << std::setw(15) << "Matrix Size" << std::setw(20) << "Runtime (sec)" << std::endl;
+    std::cout << std::left << std::setw(15) << "Size" << std::setw(20) << "Runtime(sec)" << std::setw(20) << "GFLOPS" << std::endl;
 
-    std::cout << "---------------------------------------------\n";
+    std::cout << "---------------------------------------------------------\n";
 
-    for ( std::size_t index = 0; index < benchmarkResults.size(); index++ )
+    for ( const auto& result : benchmarkResults )
     {
-        std::cout << std::left << std::setw(15) << matrixSizes[index] << std::setw(20) << std::fixed << std::setprecision(4) << benchmarkResults[index].executionTimeSeconds << std::endl;
+        std::cout << std::left << std::setw(15) << result.matrixSize << std::setw(20) << std::fixed << std::setprecision(4) << result.executionTimeSeconds << std::setw(20) << result.gflops << std::endl;
     }
 
-    std::cout << "---------------------------------------------\n";
+    std::cout << "=========================================================\n";
 
     return 0;
 }
