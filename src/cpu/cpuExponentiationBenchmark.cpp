@@ -15,7 +15,8 @@ int main()
 
     std::vector<BenchmarkResult> benchmarkResults;
 
-    std::cout << "CPU Matrix Exponentiation Benchmark\n" << "Exponent = " << exponentValue << std::endl;
+    std::cout << std::endl << std::endl << "CPU Matrix Exponentiation Benchmark\n" << "Exponent = " << exponentValue << std::endl;
+    std::cout << "---------------------------------------------\n";
 
     for (int matrixSize : matrixSizes)
     {
@@ -41,23 +42,21 @@ int main()
 
         benchmarkResults.push_back( benchmarkResult );
 
-        std::cout << "Execution Time : " << executionTime << " sec" << std::endl;
+        std::cout << "Execution Time : " << executionTime << " sec\n\n" << std::endl;
     }
 
     std::cout << "Benchmark Summary" << std::endl;
 
     std::cout << std::left << std::setw(15) << "Matrix Size" << std::setw(20) << "Runtime (sec)" << std::endl;
 
-    std::cout
-        << "---------------------------------------------\n";
+    std::cout << "---------------------------------------------\n";
 
     for ( std::size_t index = 0; index < benchmarkResults.size(); index++ )
     {
         std::cout << std::left << std::setw(15) << matrixSizes[index] << std::setw(20) << std::fixed << std::setprecision(4) << benchmarkResults[index].executionTimeSeconds << std::endl;
     }
 
-    std::cout
-        << "---------------------------------------------\n";
+    std::cout << "---------------------------------------------\n";
 
     return 0;
 }
