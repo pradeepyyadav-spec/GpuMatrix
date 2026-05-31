@@ -7,11 +7,32 @@
 #include <vector>
 #include <iomanip>
 
+int getExponentiationMultiplyCount( int exponentValue )
+{
+    int multiplicationCount = 0;
+
+    while (exponentValue > 0)
+    {
+        multiplicationCount++;
+
+        if (exponentValue & 1)
+        {
+            multiplicationCount++;
+        }
+
+        exponentValue >>= 1;
+    }
+
+    return multiplicationCount;
+}
+
 int main()
 {
     constexpr int matrixSizes[] = { 512, 1024 };
 
     constexpr int exponentValue = 100;
+
+    std::cout << " Exp : 32 " << getExponentiationMultiplyCount(32) << " Exp : 64 " << getExponentiationMultiplyCount(64) << " Exp : 100 " << getExponentiationMultiplyCount(100) << " Exp : 256 " << getExponentiationMultiplyCount(256) << std::endl;
 
     std::vector<BenchmarkResult> benchmarkResults;
 
@@ -25,11 +46,9 @@ int main()
             << "Matrix Size : " << matrixSize << " x " << matrixSize
             << "\n---------------------------------------------\n";
 
-        DenseMatrix matrix =
-            MatrixGenerator::createEdaDenseMatrix( matrixSize );
+        DenseMatrix matrix = MatrixGenerator::createEdaDenseMatrix( matrixSize );
 
-        double matrixMemoryMb =
-            static_cast<double>( matrix.getSizeInBytes() ) / (1024.0 * 1024.0);
+        double matrixMemoryMb = static_cast<double>( matrix.getSizeInBytes() ) / (1024.0 * 1024.0);
 
         std::cout << "Approx Matrix Memory : " << std::fixed << std::setprecision(2) << matrixMemoryMb << " MB" << std::endl;
 
@@ -47,7 +66,7 @@ int main()
 
         benchmarkResult.executionTimeSeconds = executionTime;
 
-        double floatingPointOperations = 2.0 * matrixSize * matrixSize * matrixSize;
+        double floatingPointOperations = getExponentiationMultiplyCount( exponentValue ) * 2.0 * matrixSize * matrixSize * matrixSize;
 
         benchmarkResult.gflops = floatingPointOperations / (executionTime * 1e9);
 
