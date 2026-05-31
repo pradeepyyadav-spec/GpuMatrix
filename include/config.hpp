@@ -1,0 +1,13 @@
+#ifndef CONFIG_HPP
+#define CONFIG_HPP
+
+#define TILE_SIZE 16
+
+#define SMALL_MATRIX 512
+#define MEDIUM_MATRIX 1024
+#define LARGE_MATRIX 2048
+#define XLARGE_MATRIX 4096
+
+#define EXPONENT 100
+
+#endif
