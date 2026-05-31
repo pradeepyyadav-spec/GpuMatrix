@@ -14,12 +14,12 @@ all:
 	src/benchmark/benchmarkInfo.cpp \
 	-o benchmarkInfo
 
-        $(CXX) \
-        src/cpu/matrixUtils.cpp \
-        src/cpu/denseCpu.cpp \
-        src/cpu/cpuExponentiationBenchmark.cpp \
-        -o cpuExponentiationBenchmark \
-        $(CPP_FLAGS)
+	$(CXX) \
+	src/cpu/matrixUtils.cpp \
+	src/cpu/denseCpu.cpp \
+	src/cpu/cpuExponentiationBenchmark.cpp \
+	-o cpuExponentiationBenchmark \
+	$(CPP_FLAGS)
 
 clean:
 
