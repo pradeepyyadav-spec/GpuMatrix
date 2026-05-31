@@ -28,11 +28,9 @@ int getExponentiationMultiplyCount( int exponentValue )
 
 int main()
 {
-    constexpr int matrixSizes[] = { 512, 1024 };
+    constexpr int matrixSizes[] = { 512, 1024, 2048 };
 
     constexpr int exponentValue = 100;
-
-    std::cout << " Exp : 32 " << getExponentiationMultiplyCount(32) << " Exp : 64 " << getExponentiationMultiplyCount(64) << " Exp : 100 " << getExponentiationMultiplyCount(100) << " Exp : 256 " << getExponentiationMultiplyCount(256) << std::endl;
 
     std::vector<BenchmarkResult> benchmarkResults;
 
