@@ -27,11 +27,11 @@ public:
             {
                 if (row == column)
                 {
-                    matrix.setValue( row, column, 1000.0 );
+                    matrix.setValue( row, column, 1.001 );
                 }
                 else if ( std::abs( row - column) <= 5 )
                 {
-                    matrix.setValue( row, column, 0.01 );
+                    matrix.setValue( row, column, 0.001 );
                 }
                 else
                 {
