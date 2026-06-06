@@ -1,6 +1,7 @@
 #pragma once
 #include <cmath>
 #include "denseMatrix.hpp"
+#include <random>
 
 class MatrixGenerator
 {
@@ -43,15 +44,17 @@ public:
         return matrix;
     }
 
-    static DenseMatrix createRandomDenseMatrix( int matrixSize, float value )
+    static DenseMatrix createRandomDenseMatrix( int matrixSize )
     {
         DenseMatrix matrix( matrixSize, matrixSize );
+        std::mt19937 generator(42);
+        std::uniform_real_distribution<float> distribution( 0.98, 1.98);
 
         for ( int row = 0; row < matrixSize; row++ )
         {
             for ( int column = 0; column < matrixSize; column++ )
             {
-                matrix.setValue( row, column, value );
+                matrix.setValue( row, column, distribution(generator) );
             }
         }
         return matrix;
