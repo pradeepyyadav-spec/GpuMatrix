@@ -64,6 +64,8 @@ DenseMatrix DenseGpu::matrixMultiplyTiled( const DenseMatrix& matrixA, const Den
 
     DenseMatrix result( matrixSize, matrixSize );
 
+    std::cout << "GPU Multiply : " << matrixA.getRowCount() << " x " << matrixA.getColumnCount() << std::endl;
+
     float* deviceMatrixA = nullptr;
     float* deviceMatrixB = nullptr;
     float* deviceMatrixC = nullptr;

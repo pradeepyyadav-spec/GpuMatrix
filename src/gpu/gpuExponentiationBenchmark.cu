@@ -48,6 +48,13 @@ int main()
     double gpuTime = gpuTimer.stop();
 
     bool validationPassed = validateResults( cpuResult, gpuResult );
+
+    double checksum = 0.0;
+    for ( size_t index = 0; index < gpuResult.getElementCount(); index++ )
+    {
+        checksum += gpuResult.getRawData()[index];
+    }
+    std::cout << "Checksum = " << checksum << " Element Count = " << gpuResult2048.getElementCount() << std::endl;
     
     std::cout << "\n=========================================================\n";
     std::cout << std::left << std::setw(20) << "Configuration" << std::setw(15) << "Runtime(sec)" << std::setw(15)
@@ -75,6 +82,13 @@ int main()
     gpuTimer2048.start();
     DenseMatrix gpuResult2048 = DenseGpu::matrixPowerTiled( matrix2048, exponentValue );
     double gpuTime2048 = gpuTimer2048.stop();
+
+    double checksum = 0.0;
+    for ( size_t index = 0; index < gpuResult2048.getElementCount(); index++ )
+    {
+        checksum += gpuResult2048.getRawData()[index];
+    }
+    std::cout << "Checksum = " << checksum << " Element Count = " << gpuResult2048.getElementCount() << std::endl;
 
     std::cout << "\n=========================================================\n";
     std::cout << std::left << std::setw(20) << "Configuration" << std::setw(15) << "Runtime(sec)" << std::setw(15)
