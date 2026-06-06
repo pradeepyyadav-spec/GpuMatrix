@@ -12,11 +12,11 @@ public:
     {
         return lastKernelRuntimeMs_;
     }
-    static double getAccumulatedKernelRuntimeMs();
+    static double getAccumulatedKernelRuntimeMs()
     {
         return accumulatedKernelRuntimeMs_;
     }
-    static void resetAccumulatedKernelRuntime();
+    static void resetAccumulatedKernelRuntime()
     {   
         accumulatedKernelRuntimeMs_ = 0.0;
     }
