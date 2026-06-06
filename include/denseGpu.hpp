@@ -12,4 +12,5 @@ public:
     static double getLastKernelRuntimeMs();
     static double getAccumulatedKernelRuntimeMs();
     static void resetAccumulatedKernelRuntime();
+    static DenseMatrix matrixPowerPersistent( const DenseMatrix& inputMatrix, int exponentValue );
 };
