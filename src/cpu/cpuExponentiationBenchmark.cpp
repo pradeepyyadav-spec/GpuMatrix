@@ -28,7 +28,7 @@ int getExponentiationMultiplyCount( int exponentValue )
 
 int main()
 {
-    constexpr int matrixSizes[] = { 512, 1024, 2048 };
+    constexpr int matrixSizes[] = { 512, 1024 };
 
     constexpr int exponentValue = 100;
 
