@@ -98,6 +98,9 @@ DenseMatrix DenseGpu::matrixPowerTiled( const DenseMatrix& inputMatrix, int expo
     }
 
     DenseMatrix result( inputMatrix.getRowCount(), inputMatrix.getColumnCount() );
+
+    std::cout << "Matrix size for exponentiation : " << inputMatrix.getRowCount() << " X " << inputMatrix.getColumnCount() << std::endl;
+
     for ( int row = 0; row < result.getRowCount(); row++ )
     {
         result.setValue( row, row, 1.0 );

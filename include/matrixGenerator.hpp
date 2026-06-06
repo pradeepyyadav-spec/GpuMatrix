@@ -31,11 +31,11 @@ public:
                 }
                 else if ( std::abs( row - column) <= 5 )
                 {
-                    matrix.setValue( row, column, 0.01f );
+                    matrix.setValue( row, column, 0.01 );
                 }
                 else
                 {
-                    matrix.setValue( row, column, 0.0f );
+                    matrix.setValue( row, column, 0.0 );
                 }
             }
         }

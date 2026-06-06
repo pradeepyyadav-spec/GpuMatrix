@@ -26,7 +26,7 @@ bool validateResults( const DenseMatrix& cpuResult, const DenseMatrix& gpuResult
 
 int main()
 {
-    constexpr int matrixSize = 1024;
+    int matrixSize = 1024;
     constexpr int exponentValue = 100;
 
     DenseMatrix matrix = MatrixGenerator::createEdaDenseMatrix( matrixSize );
@@ -83,7 +83,7 @@ int main()
 
     std::cout << std::left << std::setw(20) << "CPU Exponentiation" << std::setw(15) << 731 << std::setw(15) << "1.0" << std::setw(15) << "-" << "\n";
     std::cout << std::left << std::setw(20) << "GPU Exponentiation" << std::setw(15) << gpuTime2048 << std::setw(15)
-              << 731 / gpuTime2048 << std::setw(15) << ( validationPassed ? "PASS" : "FAIL") << "\n";
+              << 731.0 / gpuTime2048 << std::setw(15) << ( validationPassed ? "PASS" : "FAIL") << "\n";
 
     std::cout << "=========================================================\n";
 
