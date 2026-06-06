@@ -1,6 +1,7 @@
 #include "../../include/denseGpu.hpp"
 
 #include <cuda_runtime.h>
+#include <stdexcept>
 
 namespace
 {
