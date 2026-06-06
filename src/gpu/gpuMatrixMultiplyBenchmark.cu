@@ -31,8 +31,8 @@ int main()
 {
     constexpr int matrixSize = 1024;
 
-    DenseMatrix matrixA = MatrixGenerator::createEdaDenseMatrix( matrixSize );
-    DenseMatrix matrixB = MatrixGenerator::createEdaDenseMatrix( matrixSize );
+    DenseMatrix matrixA = MatrixGenerator::createRandomDenseMatrix( matrixSize );
+    DenseMatrix matrixB = MatrixGenerator::createRandomDenseMatrix( matrixSize );
 
     std::cout << "=============================================\n";
     std::cout << "CPU vs GPU Matrix Multiplication\n";

@@ -29,7 +29,7 @@ int main()
     int matrixSize = 1024;
     constexpr int exponentValue = 100;
 
-    DenseMatrix matrix = MatrixGenerator::createRandomDenseMatrix( matrixSize );
+    DenseMatrix matrix = MatrixGenerator::createEdaDenseMatrix( matrixSize );
 
     std::cout << "=============================================\n";
     std::cout << "CPU vs GPU Matrix Exponentiation\n";
