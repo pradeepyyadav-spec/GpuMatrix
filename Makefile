@@ -38,6 +38,7 @@ gpuMatrixMultiplyBenchmark:
 	$(CUDA_FLAGS) \
 	-I$(INCLUDE_DIR) \
 	src/gpu/denseNaive.cu \
+	src/gpu/denseTiled.cu \
 	src/cpu/denseCpu.cpp \
 	src/gpu/gpuMatrixMultiplyBenchmark.cu \
 	-o gpuMatrixMultiplyBenchmark

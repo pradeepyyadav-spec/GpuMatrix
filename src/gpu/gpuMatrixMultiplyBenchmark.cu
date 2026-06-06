@@ -46,20 +46,34 @@ int main()
 
     double cpuTime = cpuTimer.stop();
 
-    Timer gpuTimer;
-    gpuTimer.start();
+    Timer naiveTimer;
+    naiveTimer.start();
 
-    DenseMatrix gpuResult = DenseGpu::matrixMultiplyNaive( matrixA, matrixB );
+    DenseMatrix gpuNaiveResult = DenseGpu::matrixMultiplyNaive( matrixA, matrixB );
 
-    double gpuTime = gpuTimer.stop();
+    double naiveTime = naiveTimer.stop();
 
-    std::cout << std::fixed << std::setprecision(4);
-    std::cout << "CPU Time : " << cpuTime << " sec\n";
-    std::cout << "GPU Time : " << gpuTime << " sec\n";
-    std::cout << "Speedup : " << cpuTime / gpuTime << "x\n";
+    Timer tiledTimer;
+    tiledTimer.start();
 
-    bool validationPassed = validateResults( cpuResult, gpuResult );
-    std::cout << "Validation : " << (validationPassed ? "PASSED" : "FAILED") << std::endl;
+    DenseMatrix gpuTiledResult = DenseGpu::matrixMultiplyTiled( matrixA, matrixB );
+
+    double tiledTime = tiledTimer.stop();
+
+    bool naiveValid = validateResults( cpuResult, gpuNaiveResult );
+    bool tiledValid = validateResults( cpuResult, gpuTiledResult );
+
+    std::cout << "\n=========================================================\n";
+    std::cout << std::left << std::setw(20) << "Configuration" << std::setw(15) << "Runtime(sec)" << std::setw(15) << "Speedup" << std::setw(15) << "Validation" << "\n";
+    std::cout << "=========================================================\n";
+
+    std::cout << std::left << std::setw(20) << "CPU Serial" << std::setw(15) << cpuTime << std::setw(15) << "1.0" << std::setw(15) << "-" << "\n";
+    std::cout << std::left << std::setw(20) << "GPU Naive" << std::setw(15) << naiveTime << std::setw(15) << cpuTime / naiveTime
+              << std::setw(15) << (naiveValid ? "PASS" : "FAIL") << "\n";
+    std::cout << std::left << std::setw(20) << "GPU Tiled" << std::setw(15) << tiledTime << std::setw(15) << cpuTime / tiledTime
+              << std::setw(15) << (tiledValid ? "PASS" : "FAIL") << "\n";
+
+    std::cout << "=========================================================\n";
 
     return 0;
 }
