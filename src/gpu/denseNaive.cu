@@ -1,6 +1,7 @@
 #include "../../include/denseGpu.hpp"
 #include "../../include/cudaTimer.hpp"
 #include <cuda_runtime.h>
+#include <stdexcept>
 
 __global__ void matrixMultiplyKernel( const float* matrixA, const float* matrixB, float* matrixC, int matrixSize )
 {
@@ -48,7 +49,7 @@ DenseMatrix DenseGpu::matrixMultiplyNaive( const DenseMatrix& matrixA, const Den
     cudaDeviceSynchronize();
 
     double kernelRuntime = kernelTimer.stop();
-    DenseGpu::lastKernelRuntime_ = kernelRuntime;
+    DenseGpu::lastKernelRuntimeMs_ = kernelRuntime;
     DenseGpu::accumulatedKernelRuntimeMs_ += kernelRuntime;
 
     cudaMemcpy( result.getRawData(), deviceMatrixC, result.getSizeInBytes(), cudaMemcpyDeviceToHost );
