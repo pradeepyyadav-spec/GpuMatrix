@@ -9,10 +9,8 @@ CUDA_FLAGS = -O3
 TARGETS = \
 	benchmarkInfo \
 	environmentCheck \
-	cpuExponentiationBenchmark \
         gpuMatrixMultiplyBenchmark \
-        gpuExponentiationBenchmark \
-        gpuPersistentExponentiationBenchmark
+        exponentiationBenchmark
 
 all: $(TARGETS)
 
@@ -28,13 +26,6 @@ environmentCheck:
 	src/environment/environmentCheck.cu \
 	-o environmentCheck
 
-cpuExponentiationBenchmark:
-	$(CXX) \
-	$(CPP_FLAGS) \
-	src/cpu/denseCpu.cpp \
-	src/cpu/cpuExponentiationBenchmark.cpp \
-	-o cpuExponentiationBenchmark
-
 gpuMatrixMultiplyBenchmark:
 	$(NVCC) \
 	$(CUDA_FLAGS) \
@@ -44,26 +35,6 @@ gpuMatrixMultiplyBenchmark:
 	src/cpu/denseCpu.cpp \
 	src/gpu/gpuMatrixMultiplyBenchmark.cu \
 	-o gpuMatrixMultiplyBenchmark
-
-gpuExponentiationBenchmark:
-	$(NVCC) \
-	$(CUDA_FLAGS) \
-	-I$(INCLUDE_DIR) \
-	src/gpu/denseNaive.cu \
-	src/gpu/denseTiled.cu \
-	src/cpu/denseCpu.cpp \
-	src/gpu/gpuExponentiationBenchmark.cu \
-	-o gpuExponentiationBenchmark
-
-gpuPersistentExponentiationBenchmark:
-	$(NVCC) \
-	$(CUDA_FLAGS) \
-	-I$(INCLUDE_DIR) \
-	src/gpu/deviceMatrix.cu \
-	src/gpu/denseTiled.cu \
-	src/gpu/densePersistent.cu \
-	src/gpu/gpuPersistentExponentiationBenchmark.cu \
-	-o gpuPersistentExponentiationBenchmark
 
 exponentiationBenchmark:
 	$(NVCC) $(CUDA_FLAGS) -Iinclude \
