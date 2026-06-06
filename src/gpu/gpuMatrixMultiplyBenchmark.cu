@@ -49,7 +49,7 @@ int main()
     Timer gpuTimer;
     gpuTimer.start();
 
-    DenseMatrix gpuResult = DenseGpu::matrixMultiply( matrixA, matrixB );
+    DenseMatrix gpuResult = DenseGpu::matrixMultiplyNaive( matrixA, matrixB );
 
     double gpuTime = gpuTimer.stop();
 
