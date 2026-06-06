@@ -8,4 +8,5 @@ public:
 
     static DenseMatrix matrixMultiplyNaive( const DenseMatrix& matrixA, const DenseMatrix& matrixB );
     static DenseMatrix matrixMultiplyTiled( const DenseMatrix& matrixA, const DenseMatrix& matrixB );
+    static DenseMatrix matrixPowerTiled( const DenseMatrix& inputMatrix, int exponentValue );
 };

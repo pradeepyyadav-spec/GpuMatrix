@@ -10,7 +10,8 @@ TARGETS = \
 	benchmarkInfo \
 	environmentCheck \
 	cpuExponentiationBenchmark \
-        gpuMatrixMultiplyBenchmark
+        gpuMatrixMultiplyBenchmark \
+        gpuExponentiationBenchmark
 
 all: $(TARGETS)
 
@@ -42,6 +43,16 @@ gpuMatrixMultiplyBenchmark:
 	src/cpu/denseCpu.cpp \
 	src/gpu/gpuMatrixMultiplyBenchmark.cu \
 	-o gpuMatrixMultiplyBenchmark
+
+gpuExponentiationBenchmark:
+	$(NVCC) \
+	$(CUDA_FLAGS) \
+	-I$(INCLUDE_DIR) \
+	src/gpu/denseNaive.cu \
+	src/gpu/denseTiled.cu \
+	src/cpu/denseCpu.cpp \
+	src/gpu/gpuExponentiationBenchmark.cu \
+	-o gpuExponentiationBenchmark
 
 clean:
 	rm -f $(TARGETS)

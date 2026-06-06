@@ -88,3 +88,30 @@ DenseMatrix DenseGpu::matrixMultiplyTiled( const DenseMatrix& matrixA, const Den
 
     return result;
 }
+
+DenseMatrix DenseGpu::matrixPowerTiled( const DenseMatrix& inputMatrix, int exponentValue )
+{
+    if (!inputMatrix.isSquare())
+    {
+        throw std::runtime_error( "Matrix exponentiation requires square matrix." );
+    }
+
+    DenseMatrix result( inputMatrix.getRowCount(), inputMatrix.getColumnCount() );
+    for ( int row = 0; row < result.getRowCount(); row++ )
+    {
+        result.setValue( row, row, 1.0 );
+    }
+
+    DenseMatrix baseMatrix = inputMatrix;
+    while (exponentValue > 0)
+    {
+        if (exponentValue & 1)
+        {
+            result = matrixMultiplyTiled( result, baseMatrix );
+        }
+        baseMatrix = matrixMultiplyTiled( baseMatrix, baseMatrix );
+        exponentValue >>= 1;
+    }
+
+    return result;
+}
