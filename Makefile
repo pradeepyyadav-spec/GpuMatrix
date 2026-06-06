@@ -54,6 +54,15 @@ gpuExponentiationBenchmark:
 	src/gpu/gpuExponentiationBenchmark.cu \
 	-o gpuExponentiationBenchmark
 
+gpuPersistentExponentiationBenchmark:
+	$(NVCC) \
+	$(CUDA_FLAGS) \
+	-I$(INCLUDE_DIR) \
+	src/gpu/deviceMatrix.cu \
+	src/gpu/denseTiled.cu \
+	src/gpu/densePersistent.cu \
+	src/gpu/gpuPersistentExponentiationBenchmark.cu \
+	-o gpuPersistentExponentiationBenchmark
 clean:
 	rm -f $(TARGETS)
 

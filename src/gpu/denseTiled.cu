@@ -1,5 +1,6 @@
 #include "../../include/denseGpu.hpp"
 #include "../../include/cudaTimer.hpp"
+#include "../../include/gpuKernels.cuh"
 #include <cuda_runtime.h>
 #include <stdexcept>
 #include <iostream>
