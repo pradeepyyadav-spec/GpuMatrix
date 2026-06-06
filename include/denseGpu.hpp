@@ -6,5 +6,6 @@ class DenseGpu
 {
 public:
 
-    static DenseMatrix matrixMultiply( const DenseMatrix& matrixA, const DenseMatrix& matrixB );
+    static DenseMatrix matrixMultiplyNaive( const DenseMatrix& matrixA, const DenseMatrix& matrixB );
+    static DenseMatrix matrixMultiplyTiled( const DenseMatrix& matrixA, const DenseMatrix& matrixB );
 };

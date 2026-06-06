@@ -21,7 +21,7 @@ __global__ void matrixMultiplyKernel( const float* matrixA, const float* matrixB
     matrixC[ row * matrixSize + column ] = sum;
 }
 
-DenseMatrix DenseGpu::matrixMultiply( const DenseMatrix& matrixA, const DenseMatrix& matrixB )
+DenseMatrix DenseGpu::matrixMultiplyNaive( const DenseMatrix& matrixA, const DenseMatrix& matrixB )
 {
     const int matrixSize = matrixA.getRowCount();
 
