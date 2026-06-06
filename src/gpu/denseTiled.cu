@@ -8,8 +8,6 @@
 namespace
 {
     constexpr int tileSize = 16;
-    double lastKernelRuntimeMs = 0.0;
-    double accumulatedKernelRuntimeMs = 0.0;
 }
 
 double DenseGpu::lastKernelRuntimeMs_ = 0.0;
@@ -133,17 +131,3 @@ DenseMatrix DenseGpu::matrixPowerTiled( const DenseMatrix& inputMatrix, int expo
     return result;
 }
 
-double DenseGpu::getLastKernelRuntimeMs()
-{
-    return lastKernelRuntimeMs;
-}
-
-double DenseGpu::getAccumulatedKernelRuntimeMs()
-{
-    return accumulatedKernelRuntimeMs;
-}
-
-void DenseGpu::resetAccumulatedKernelRuntime()
-{
-    accumulatedKernelRuntimeMs = 0.0;
-}
