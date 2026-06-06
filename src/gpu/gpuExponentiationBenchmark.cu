@@ -67,7 +67,7 @@ int main()
 
     std::cout << std::left << std::setw(20) << "CPU Exponentiation" << std::setw(15) << cpuTime << std::setw(15) << "-" << std::setw(15) << "1.0" << std::setw(15) << "-" << "\n";
     std::cout << std::left << std::setw(20) << "GPU Exponentiation" << std::setw(15) << gpuTime << std::setw(15)
-              << kernelRuntimeMs << std::setw(15) << cpuTime / gpuTime << std::setw(15) << ( validationPassed ? "PASS" : "FAIL" );
+              << kernelRuntimeMs << std::setw(15) << cpuTime / gpuTime << std::setw(15) << ( validationPassed ? "PASS" : "FAIL" )<<std::endl;
 
     std::cout << "=========================================================\n";
 
@@ -103,7 +103,7 @@ int main()
 
     std::cout << std::left << std::setw(20) << "CPU Exponentiation" << std::setw(15) << 731 << std::setw(15) << "-" << std::setw(15) << "1.0" << std::setw(15) << "-" << "\n";
     std::cout << std::left << std::setw(20) << "GPU Exponentiation" << std::setw(15) << gpuTime2048 << std::setw(15)
-              << kernelRuntimeMs << std::setw(15) << 731.0 / gpuTime2048 << std::setw(15) << ( validationPassed ? "PASS" : "FAIL" );
+              << kernelRuntimeMs << std::setw(15) << 731.0 / gpuTime2048 << std::setw(15) << ( validationPassed ? "PASS" : "FAIL" ) << std::endl;
 
     std::cout << "=========================================================\n";
 
