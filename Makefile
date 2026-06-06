@@ -11,7 +11,8 @@ TARGETS = \
 	environmentCheck \
 	cpuExponentiationBenchmark \
         gpuMatrixMultiplyBenchmark \
-        gpuExponentiationBenchmark
+        gpuExponentiationBenchmark \
+        gpuPersistentExponentiationBenchmark
 
 all: $(TARGETS)
 

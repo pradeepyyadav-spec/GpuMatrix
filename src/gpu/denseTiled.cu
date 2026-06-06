@@ -12,6 +12,9 @@ namespace
     double accumulatedKernelRuntimeMs = 0.0;
 }
 
+double DenseGpu::lastKernelRuntimeMs_ = 0.0;
+double DenseGpu::accumulatedKernelRuntimeMs_ = 0.0;
+
 __global__ void tiledMatrixMultiplyKernel( const float* matrixA, const float* matrixB, float* matrixC, int matrixSize )
 {
     __shared__ float tileA[tileSize][tileSize];
@@ -88,8 +91,8 @@ DenseMatrix DenseGpu::matrixMultiplyTiled( const DenseMatrix& matrixA, const Den
     cudaDeviceSynchronize();
 
     double kernelRuntime = kernelTimer.stop();
-    lastKernelRuntimeMs = kernelRuntime;
-    accumulatedKernelRuntimeMs += kernelRuntime;
+    DenseGpu::lastKernelRuntimeMs_ = kernelRuntime;
+    DenseGpu::accumulatedKernelRuntimeMs_ += kernelRuntime;
 
     cudaMemcpy( result.getRawData(), deviceMatrixC, result.getSizeInBytes(), cudaMemcpyDeviceToHost );
 

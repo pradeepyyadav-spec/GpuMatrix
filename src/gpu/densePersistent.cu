@@ -23,7 +23,7 @@ static void launchTiledMultiply( DeviceMatrix& matrixA, DeviceMatrix& matrixB, D
 
     cudaDeviceSynchronize();
     double kernelRuntime = kernelTimer.stop();
-    accumulatedKernelRuntimeMs += kernelRuntime;
+    DenseGpu::accumulatedKernelRuntimeMs_ += kernelRuntime;
 }
 
 DenseMatrix DenseGpu::matrixPowerPersistent( const DenseMatrix& inputMatrix, int exponentValue )
