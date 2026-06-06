@@ -1,5 +1,5 @@
 #include "../../include/denseGpu.hpp"
-
+#include "../../include/cudaTimer.hpp"
 #include <cuda_runtime.h>
 
 __global__ void matrixMultiplyKernel( const float* matrixA, const float* matrixB, float* matrixC, int matrixSize )
@@ -41,9 +41,15 @@ DenseMatrix DenseGpu::matrixMultiplyNaive( const DenseMatrix& matrixA, const Den
     dim3 threadsPerBlock( 16, 16 );
     dim3 blocksPerGrid( (matrixSize + 15) / 16, (matrixSize + 15) / 16 );
 
-    matrixMultiplyKernel<<< blocksPerGrid, threadsPerBlock >>>( deviceMatrixA, deviceMatrixB, deviceMatrixC, matrixSize );
+    CudaTimer kernelTimer;
+    kernelTimer.start();
 
+    matrixMultiplyKernel<<< blocksPerGrid, threadsPerBlock >>>( deviceMatrixA, deviceMatrixB, deviceMatrixC, matrixSize );
     cudaDeviceSynchronize();
+
+    double kernelRuntime = kernelTimer.stop();
+    DenseGpu::lastKernelRuntime_ = kernelRuntime;
+    DenseGpu::accumulatedKernelRuntimeMs_ += kernelRuntime;
 
     cudaMemcpy( result.getRawData(), deviceMatrixC, result.getSizeInBytes(), cudaMemcpyDeviceToHost );
 
@@ -51,5 +57,31 @@ DenseMatrix DenseGpu::matrixMultiplyNaive( const DenseMatrix& matrixA, const Den
     cudaFree(deviceMatrixB);
     cudaFree(deviceMatrixC);
 
+    return result;
+}
+
+DenseMatrix DenseGpu::matrixPowerNaive( const DenseMatrix& inputMatrix, int exponentValue )
+{
+    if ( !inputMatrix.isSquare() )
+    {
+        throw std::runtime_error( "Matrix exponentiation requires square matrix." );
+    }
+
+    DenseMatrix result( inputMatrix.getRowCount(), inputMatrix.getColumnCount() );
+    for ( int row = 0; row < result.getRowCount(); row++ )
+    {
+        result.setValue( row, row, 1.0 );
+    }
+
+    DenseMatrix baseMatrix = inputMatrix;
+    while ( exponentValue > 0 )
+    {
+        if ( exponentValue & 1 )
+        {
+            result = matrixMultiplyNaive( result, baseMatrix );
+        }
+        baseMatrix = matrixMultiplyNaive( baseMatrix, baseMatrix );
+        exponentValue >>= 1;
+    }
     return result;
 }
