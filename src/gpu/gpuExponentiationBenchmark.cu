@@ -43,9 +43,13 @@ int main()
     double cpuTime = cpuTimer.stop();
 
     Timer gpuTimer;
+    DenseGpu::resetAccumulatedKernelRuntime();
     gpuTimer.start();
+
     DenseMatrix gpuResult = DenseGpu::matrixPowerTiled( matrix, exponentValue );
+
     double gpuTime = gpuTimer.stop();
+    double kernelRuntimeMs = DenseGpu::getAccumulatedKernelRuntimeMs();
 
     bool validationPassed = validateResults( cpuResult, gpuResult );
 
@@ -58,19 +62,19 @@ int main()
     
     std::cout << "\n=========================================================\n";
     std::cout << std::left << std::setw(20) << "Configuration" << std::setw(15) << "Runtime(sec)" << std::setw(15)
-              << "Speedup" << std::setw(15) << "Validation" << "\n";
+              << "Kernel(ms)" << std::setw(15) << "Speedup" << std::setw(15) << "Validation" << "\n";
     std::cout << "=========================================================\n";
 
-    std::cout << std::left << std::setw(20) << "CPU Exponentiation" << std::setw(15) << cpuTime << std::setw(15) << "1.0" << std::setw(15) << "-" << "\n";
+    std::cout << std::left << std::setw(20) << "CPU Exponentiation" << std::setw(15) << cpuTime << std::setw(15) << "-" << std::setw(15) << "1.0" << std::setw(15) << "-" << "\n";
     std::cout << std::left << std::setw(20) << "GPU Exponentiation" << std::setw(15) << gpuTime << std::setw(15)
-              << cpuTime / gpuTime << std::setw(15) << ( validationPassed ? "PASS" : "FAIL") << "\n";
+              << kernelRuntimeMs << std::setw(15) << cpuTime / gpuTime << std::setw(15) << ( validationPassed ? "PASS" : "FAIL" )
 
     std::cout << "=========================================================\n";
 
 
     // 2048 Matrix now.
     matrixSize = 2048;
-    DenseMatrix matrix2048 = MatrixGenerator::createRandomDenseMatrix( matrixSize );
+    DenseMatrix matrix2048 = MatrixGenerator::createEdaDenseMatrix( matrixSize );
 
     std::cout << "\n\n\n\n=============================================\n";
     std::cout << "CPU vs GPU Matrix Exponentiation\n";
@@ -79,9 +83,11 @@ int main()
     std::cout << "=============================================\n";
 
     Timer gpuTimer2048;
+    DenseGpu::resetAccumulatedKernelRuntime();
     gpuTimer2048.start();
     DenseMatrix gpuResult2048 = DenseGpu::matrixPowerTiled( matrix2048, exponentValue );
     double gpuTime2048 = gpuTimer2048.stop();
+    double kernelRuntimeMs = DenseGpu::getAccumulatedKernelRuntimeMs();
 
     checksum = 0.0;
     for ( size_t index = 0; index < gpuResult2048.getElementCount(); index++ )
@@ -92,12 +98,12 @@ int main()
 
     std::cout << "\n=========================================================\n";
     std::cout << std::left << std::setw(20) << "Configuration" << std::setw(15) << "Runtime(sec)" << std::setw(15)
-              << "Speedup" << std::setw(15) << "Validation" << "\n";
+              << "Kernel(ms)" << std::setw(15) << "Speedup" << std::setw(15) << "Validation" << "\n";
     std::cout << "=========================================================\n";
 
-    std::cout << std::left << std::setw(20) << "CPU Exponentiation" << std::setw(15) << 731 << std::setw(15) << "1.0" << std::setw(15) << "-" << "\n";
+    std::cout << std::left << std::setw(20) << "CPU Exponentiation" << std::setw(15) << 731 << std::setw(15) << "-" << std::setw(15) << "1.0" << std::setw(15) << "-" << "\n";
     std::cout << std::left << std::setw(20) << "GPU Exponentiation" << std::setw(15) << gpuTime2048 << std::setw(15)
-              << 731.0 / gpuTime2048 << std::setw(15) << ( validationPassed ? "PASS" : "FAIL") << "\n";
+              << kernelRuntimeMs << std::setw(15) << 731.0 / gpuTime2048 << std::setw(15) << ( validationPassed ? "PASS" : "FAIL" )
 
     std::cout << "=========================================================\n";
 

@@ -1,5 +1,5 @@
 #include "../../include/denseGpu.hpp"
-
+#include "../../include/cudaTimer.hpp"
 #include <cuda_runtime.h>
 #include <stdexcept>
 #include <iostream>
@@ -7,6 +7,8 @@
 namespace
 {
     constexpr int tileSize = 16;
+    double lastKernelRuntimeMs = 0.0;
+    double accumulatedKernelRuntimeMs = 0.0;
 }
 
 __global__ void tiledMatrixMultiplyKernel( const float* matrixA, const float* matrixB, float* matrixC, int matrixSize )
@@ -80,9 +82,15 @@ DenseMatrix DenseGpu::matrixMultiplyTiled( const DenseMatrix& matrixA, const Den
     dim3 threadsPerBlock( tileSize, tileSize );
     dim3 blocksPerGrid( (matrixSize + tileSize - 1) / tileSize, (matrixSize + tileSize - 1) / tileSize );
 
-    tiledMatrixMultiplyKernel<<< blocksPerGrid, threadsPerBlock >>>( deviceMatrixA, deviceMatrixB, deviceMatrixC, matrixSize );
+    CudaTimer kernelTimer;
+    kernelTimer.start();
 
+    tiledMatrixMultiplyKernel<<< blocksPerGrid, threadsPerBlock >>>( deviceMatrixA, deviceMatrixB, deviceMatrixC, matrixSize );
     cudaDeviceSynchronize();
+
+    double kernelRuntime = kernelTimer.stop();
+    lastKernelRuntimeMs = kernelRuntime;
+    accumulatedKernelRuntimeMs += kernelRuntime;
 
     cudaMemcpy( result.getRawData(), deviceMatrixC, result.getSizeInBytes(), cudaMemcpyDeviceToHost );
 
@@ -121,4 +129,19 @@ DenseMatrix DenseGpu::matrixPowerTiled( const DenseMatrix& inputMatrix, int expo
     }
 
     return result;
+}
+
+double DenseGpu::getLastKernelRuntimeMs()
+{
+    return lastKernelRuntimeMs;
+}
+
+double DenseGpu::getAccumulatedKernelRuntimeMs()
+{
+    return accumulatedKernelRuntimeMs;
+}
+
+void DenseGpu::resetAccumulatedKernelRuntime()
+{
+    accumulatedKernelRuntimeMs = 0.0;
 }
