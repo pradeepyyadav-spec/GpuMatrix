@@ -24,7 +24,7 @@ void printDeviceInfo()
         cudaDeviceProp prop;
         cudaGetDeviceProperties( &prop, i );
 
-        std::cout << << std::endl << "GPU : " << prop.name << std::endl;
+        std::cout << std::endl << "GPU : " << prop.name << std::endl;
         std::cout << "Global Memory (GB): " << prop.totalGlobalMem /( 1024.0 * 1024 * 1024 ) << std::endl;
         std::cout << "SM Count : " << prop.multiProcessorCount << std::endl;
         std::cout << "Compute Capability : " << prop.major << "." << prop.minor << std::endl;
@@ -38,6 +38,4 @@ void printDeviceInfo()
         #endif
         std::cout << "=================================" << std::endl << std::endl << std::endl;
     }
-
-    return 0;
 }
