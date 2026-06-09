@@ -2,6 +2,7 @@
 #include "../../include/denseGpu.hpp"
 #include "../../include/matrixGenerator.hpp"
 #include "../../include/timer.hpp"
+#include "../../include/environmentCheck.cuh"
 
 #include <iostream>
 #include <iomanip>
@@ -29,6 +30,7 @@ bool validateResults( const DenseMatrix& cpuResult, const DenseMatrix& gpuResult
 
 int main()
 {
+    printDeviceInfo();
     constexpr int matrixSize = 1024;
 
     DenseMatrix matrixA = MatrixGenerator::createRandomDenseMatrix( matrixSize );

@@ -2,6 +2,7 @@
 #include "../../include/denseGpu.hpp"
 #include "../../include/matrixGenerator.hpp"
 #include "../../include/timer.hpp"
+#include "../../include/environmentCheck.cuh"
 #include <iostream>
 #include <iomanip>
 #include <cmath>
@@ -35,7 +36,14 @@ void printResultRow( const std::string& configurationName, double runtimeSeconds
 
 int main()
 {
+    printDeviceInfo();
+
+#ifdef LARGE_MAT
     constexpr int matrixSizes[] = { 1024, 2048 };
+#else
+    constexpr int matrixSizes[] = { 1024 };
+#endif
+
     constexpr int exponentValue = 100;
 
     for ( int matrixSize : matrixSizes )

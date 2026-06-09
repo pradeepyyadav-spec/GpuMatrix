@@ -1,11 +1,15 @@
 #include <cuda_runtime.h>
 #include <iostream>
 
-int main()
+void printDeviceInfo()
 {
     int deviceCount;
-
     cudaGetDeviceCount(&deviceCount);
+
+    std::cout << "GPU MATRIX COMPUTATION FRAMEWORK" << std::endl;
+    std::cout << "Scientific + EDA Workloads" << std::endl;
+    std::cout << "Benchmark Suite Initialized" << std::endl;
+    std::cout << "=================================" << std::endl;
 
     std::cout << "CUDA Devices on Machine : " << deviceCount << std::endl;
 
@@ -20,10 +24,11 @@ int main()
         cudaDeviceProp prop;
         cudaGetDeviceProperties( &prop, i );
 
-        std::cout << "GPU : " << prop.name << std::endl;
+        std::cout << << std::endl << "GPU : " << prop.name << std::endl;
         std::cout << "Global Memory (GB): " << prop.totalGlobalMem /( 1024.0 * 1024 * 1024 ) << std::endl;
         std::cout << "SM Count : " << prop.multiProcessorCount << std::endl;
         std::cout << "Compute Capability : " << prop.major << "." << prop.minor << std::endl;
+        std::cout << "=================================" << std::endl << std::endl<< std::endl;
     }
 
     return 0;

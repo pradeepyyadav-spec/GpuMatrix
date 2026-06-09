@@ -5,9 +5,17 @@
 #include <stdexcept>
 #include <iostream>
 
+#ifndef TILE_SIZE
+#define TILE_SIZE 16
+#endif
+
+#ifdef ENABLE_UNROLL
+#pragma unroll
+#endif
+
 namespace
 {
-    constexpr int tileSize = 16;
+    constexpr int tileSize = TILE_SIZE
 }
 
 double DenseGpu::lastKernelRuntimeMs_ = 0.0;
