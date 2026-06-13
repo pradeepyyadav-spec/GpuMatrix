@@ -15,7 +15,8 @@ endif
 
 TARGETS = \
         gpuMatrixMultiplyBenchmark \
-        exponentiationBenchmark
+        exponentiationBenchmark \
+        profilingBenchmark
 
 all: $(TARGETS)
 
@@ -39,6 +40,15 @@ exponentiationBenchmark:
 	src/benchmark/exponentiationBenchmark.cu \
 	-o exponentiationBenchmark
 
+profilingBenchmark:
+        $(NVCC) $(CUDA_FLAGS) -Iinclude \
+        src/cpu/denseCpu.cpp \
+        src/gpu/denseNaive.cu \
+        src/gpu/denseTiled.cu \
+        src/gpu/densePersistent.cu \
+        src/gpu/deviceMatrix.cu \
+        src/benchmark/profilingBenchmark.cu \
+        -o profilingBenchmark
 clean:
 	rm -f $(TARGETS)
 
