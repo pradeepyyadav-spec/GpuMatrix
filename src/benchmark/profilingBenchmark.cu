@@ -16,6 +16,7 @@ enum class ProfileMode
 
 int main( int argc, char* argv[] )
 {
+    printDeviceInfo();
     ProfileMode profileMode = ProfileMode::Naive;
 
     if ( argc > 1 )
@@ -33,7 +34,6 @@ int main( int argc, char* argv[] )
             return 1;
         }
     }
-    printDeviceInfo();
 
     constexpr int matrixSizes = 4096;
     constexpr int exponentValue = 100;
@@ -43,14 +43,17 @@ int main( int argc, char* argv[] )
     switch ( profileMode )
     {
         case ProfileMode::Naive:
+            std::cout << "Profiling Naive Implementation" << std::endl;
             DenseMatrix gpuNaiveResult = DenseGpu::matrixMultiplyNaive( matrix, matrix );
             break;
 
         case ProfileMode::Tiled:
+            std::cout << "Profiling Tiled Implementation" << std::endl;
             DenseMatrix gpuTiledResult = DenseGpu::matrixMultiplyTiled( matrix, matrix );
             break;
 
         case ProfileMode::Warmup:
+            std::cout << "Warming up" << std::endl;
             DenseGpu::matrixMultiplyTiled( matrix, matrix );
             break;
     }

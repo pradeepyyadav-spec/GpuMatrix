@@ -27,7 +27,7 @@ gpuMatrixMultiplyBenchmark:
 	src/gpu/denseNaive.cu \
 	src/gpu/denseTiled.cu \
 	src/cpu/denseCpu.cpp \
-	src/gpu/gpuMatrixMultiplyBenchmark.cu \
+	src/benchmark/gpuMatrixMultiplyBenchmark.cu \
 	-o gpuMatrixMultiplyBenchmark
 
 exponentiationBenchmark:
@@ -41,14 +41,14 @@ exponentiationBenchmark:
 	-o exponentiationBenchmark
 
 profilingBenchmark:
-        $(NVCC) $(CUDA_FLAGS) -Iinclude \
-        src/cpu/denseCpu.cpp \
-        src/gpu/denseNaive.cu \
-        src/gpu/denseTiled.cu \
-        src/gpu/densePersistent.cu \
-        src/gpu/deviceMatrix.cu \
-        src/benchmark/profilingBenchmark.cu \
-        -o profilingBenchmark
+	$(NVCC) $(CUDA_FLAGS) -Iinclude \
+	src/cpu/denseCpu.cpp \
+	src/gpu/denseNaive.cu \
+	src/gpu/denseTiled.cu \
+	src/gpu/densePersistent.cu \
+	src/gpu/deviceMatrix.cu \
+	src/benchmark/profilingBenchmark.cu \
+	-o profilingBenchmark
 clean:
 	rm -f $(TARGETS)
 
