@@ -106,7 +106,8 @@ int main()
         printResultRow( "GPU Persistent Exponentiation", gpuPersistentRuntime, std::to_string( gpuPersistentKernelRuntime), cpuRuntime / gpuPersistentRuntime, gpuPersistentValidation ? "PASS" : "FAIL" );
 
         std::cout << "====================================================================================================\n";
-        std::cout << "Persistent Improvement : " << gpuTiledRuntime / gpuPersistentRuntime << "x\n";
+        std::cout << "Tiled Improvement on Naive : " << gpuNaiveRuntime / gpuTiledRuntime << "x\n";
+        std::cout << "Persistent Improvement on Tiled : " << gpuTiledRuntime / gpuPersistentRuntime << "x\n";
         std::cout << "====================================================================================================\n";
     }
 

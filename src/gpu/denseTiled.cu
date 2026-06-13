@@ -5,14 +5,9 @@
 #include <stdexcept>
 #include <iostream>
 
-#ifndef TILE_SIZE
-#define TILE_SIZE 16
-#endif
-
-
 namespace
 {
-    constexpr int tileSize = TILE_SIZE;
+    constexpr int tileSize = 16;
 }
 
 double DenseGpu::lastKernelRuntimeMs_ = 0.0;
@@ -53,9 +48,6 @@ __global__ void tiledMatrixMultiplyKernel( const float* matrixA, const float* ma
 
         __syncthreads();
 
-#ifdef ENABLE_UNROLL
-#pragma unroll
-#endif
         for ( int k = 0; k < tileSize; k++ )
         {
             sum += tileA[threadIdx.y][k] * tileB[k][threadIdx.x];

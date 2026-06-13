@@ -28,14 +28,6 @@ void printDeviceInfo()
         std::cout << "Global Memory (GB): " << prop.totalGlobalMem /( 1024.0 * 1024 * 1024 ) << std::endl;
         std::cout << "SM Count : " << prop.multiProcessorCount << std::endl;
         std::cout << "Compute Capability : " << prop.major << "." << prop.minor << std::endl;
-        std::cout << "=================================" << std::endl;
-
-        std::cout << "Tile Size : " << TILE_SIZE << std::endl;
-        #ifdef ENABLE_UNROLL
-            std::cout << "Loop Unrolling : ON" << std::endl;
-        #else
-            std::cout << "Loop Unrolling : OFF" << std::endl;
-        #endif
-        std::cout << "=================================" << std::endl << std::endl << std::endl;
+        std::cout << "=================================" << std::endl << std::endl;
     }
 }
