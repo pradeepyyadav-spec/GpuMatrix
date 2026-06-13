@@ -35,27 +35,32 @@ int main( int argc, char* argv[] )
         }
     }
 
-    constexpr int matrixSizes = 4096;
-    constexpr int exponentValue = 100;
+    constexpr int matrixSize = 4096;
 
     DenseMatrix matrix = MatrixGenerator::createEdaDenseMatrix( matrixSize );
 
     switch ( profileMode )
     {
         case ProfileMode::Naive:
+        {
             std::cout << "Profiling Naive Implementation" << std::endl;
             DenseMatrix gpuNaiveResult = DenseGpu::matrixMultiplyNaive( matrix, matrix );
             break;
+        }
 
         case ProfileMode::Tiled:
+        {
             std::cout << "Profiling Tiled Implementation" << std::endl;
             DenseMatrix gpuTiledResult = DenseGpu::matrixMultiplyTiled( matrix, matrix );
             break;
+        }
 
         case ProfileMode::Warmup:
+        {
             std::cout << "Warming up" << std::endl;
             DenseGpu::matrixMultiplyTiled( matrix, matrix );
             break;
+        }
     }
 
     return 0;
