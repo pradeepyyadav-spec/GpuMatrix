@@ -16,7 +16,6 @@ enum class ProfileMode
 
 int main( int argc, char* argv[] )
 {
-    printDeviceInfo();
     ProfileMode profileMode = ProfileMode::Naive;
 
     if ( argc > 1 )

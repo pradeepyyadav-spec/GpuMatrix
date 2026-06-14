@@ -30,8 +30,7 @@ bool validateResults( const DenseMatrix& cpuResult, const DenseMatrix& gpuResult
 
 int main()
 {
-    printDeviceInfo();
-    constexpr int matrixSize = 1024;
+    constexpr int matrixSize = 2048;
 
     DenseMatrix matrixA = MatrixGenerator::createRandomDenseMatrix( matrixSize );
     DenseMatrix matrixB = MatrixGenerator::createRandomDenseMatrix( matrixSize );

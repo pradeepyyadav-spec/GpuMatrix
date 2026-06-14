@@ -36,8 +36,6 @@ void printResultRow( const std::string& configurationName, double runtimeSeconds
 
 int main()
 {
-    printDeviceInfo();
-
 #ifdef LARGE_MAT
     constexpr int matrixSizes[] = { 1024, 2048 };
 #else
